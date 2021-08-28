@@ -1,0 +1,100 @@
+{% extends "app/base.html" %}
+
+{% block title %}Books{% endblock title %}
+
+{% load static %}
+
+{% block style %}
+
+.bottomright {
+    position: absolute;
+    bottom: 65px;
+    right: 16px;
+    font-size: 17px;
+}
+
+.bottomleft {
+    position: absolute;
+    bottom: 65px;
+    left: 16px;
+    font-size: 17px;
+}
+
+.rbtn {
+    position: absolute;
+    bottom: 11.7px;
+    right: 20px;
+    font-size: 16.5px;
+}
+{% endblock style %}
+
+
+{% block msg %}
+<div>
+    {% if messages %}
+        {% for message in messages %}
+            {% if message.tags == 'success' %}
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>Success - </strong>
+            {% else %}
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    <strong>Error - </strong>
+            {% endif %}
+                {{message}}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+        {% endfor %}
+    {% endif %}
+</div>
+{% endblock msg %}
+
+{% block page1 %}
+<br>
+<br>
+<br>
+{% include 'app/pagination.html' %}
+<hr>
+{% endblock page1 %}
+
+{% block content %}
+<div class="col-sm-10 container">
+    {% for book in books %}
+        {% if forloop.counter0|divisibleby:3 %} <div class="row"> {%  endif %}
+            <div class="col-md-4">
+                <div class="card mt-5">
+                    <img class="card-img-top" src="{% static "images/image1.jpeg" %}" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title text-dark">{{book.bookname}}</h5>
+                        <p class="card-text text-secondary ml-5">"{{book.author}}"</p>
+                    </div>
+                    <hr>
+                    <div class="container">
+                        <p class="bottomleft text-dark">Price - <b class="text-danger">{{book.price}}/-</b></p>
+                        <p class="bottomright text-dark">Quantity - <b class="text-danger">{{book.quantity}}</b></p>
+                    </div>
+                    <br>
+                    <br>
+                    <div class="card-footer">
+                        {% if request.user.is_staff %}
+                        <a href="{% url 'updatebook' book.id %}" class="btn btn-primary">Update</a>
+                        <a href="{% url 'deletebook' book.id %}" class="rbtn btn btn-primary ml-2">Delete</a>
+                        {% else %}
+                        <a href="{% url 'purchasebook' book.id %}" class="btn btn-primary">Buy</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {%if forloop.counter|divisibleby:3 or forloop.last %}</div><br><br>{%  endif %}
+    {%  endfor %}
+</div>
+{% endblock content %}
+{% block page2 %}
+<hr>
+{% include 'app/pagination.html' %}
+<br>
+<br>
+{% endblock page2 %}
+
+

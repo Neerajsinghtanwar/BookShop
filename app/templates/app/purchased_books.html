@@ -1,0 +1,37 @@
+{% extends 'app/base.html' %}
+{% block title %}Purchased Books{% endblock title %}
+{% load static %}
+
+{% block content %}
+<div class="col-sm-7 container">
+    <h3 class="text-white my-5">Purchases</h3>
+    {% for n in books %}
+    <div>Date - {{n.date}}</div>
+    <div class="jumbotron jumbotron-fluid jumbo-color">
+        <div class="container mr-5">
+
+            <div class="media">
+                <img src="{% static "images/image1.jpeg" %}" class="rounded" width="160" height="160">
+                <div class="col-sm-7 container">
+                <div class="media-body">
+                    <h2 class="mt-5 ml-5 mr-5">{{n.bookname}}</h2>
+                    <p class="mt-3 ml-5 mr-5">({{n.address}})</p>
+                    <h5 class="rptxt mt-3 ml-5 mr-5">Price - <b>{{n.price}}/-</b></h5>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    {% endfor %}
+</div>
+
+{% endblock content %}
+
+
+{% block page2 %}
+<hr>
+{% include 'app/pagination.html' %}
+<br>
+<br>
+{% endblock page2 %}

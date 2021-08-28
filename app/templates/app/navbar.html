@@ -1,0 +1,39 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="{% url 'home' %}">BookShop</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a>
+        <a class="nav-link" href="{% url 'about' %}">About</a>
+        <a class="nav-link" href="{% url 'contact' %}">Contact</a>
+        <a class="nav-link" href="{% url 'viewbooks' %}">Books</a>
+      </div>
+    </div>
+
+    <div class="navbar-nav">
+      <div class="nav-item dropdown">
+        {% if request.user.is_authenticated %}
+          {% if user is request.user %}
+          <a class="nav-link dropdown-toggle" href="{% url 'home' %}" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            {{user}}({{user.user_type}})
+          </a>
+          {% endif %}
+        {% else %}
+          <a class="nav-link active" href="{% url 'login' %}">Login/Signup</a>
+        {% endif %}
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="{% url 'userprofile' %}">Profile</a>
+          <a class="dropdown-item" href="{% url 'viewpurchasedbooks' %}">Purchased Books</a>
+          {% if request.user.is_staff %}
+          <a class="dropdown-item" href="{% url 'addbook' %}">Add Book</a>
+          {% endif %}
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
