@@ -9,16 +9,17 @@ class SignUpForm(UserCreationForm):
     password2 = forms.CharField(label='Confirm Password', widget=forms.PasswordInput(attrs={'class':'form-control'}))
     class Meta:
         model = User     
-        fields = ['first_name', 'last_name', 'username', 'email']
-        labels = {'first_name':'First Name','last_name':'Last Name','email':'Email'}
-        widgets = {'username':forms.TextInput(attrs=
-        {'class':'form-control'}),
+        fields = ['username', 'first_name', 'last_name', 'email', 'user_type']
+        labels = {'first_name':'First Name','last_name':'Last Name','email':'Email','user_type':'You are'}
+        widgets = {
+        'username':forms.TextInput(attrs={'class':'form-control'}),
         'first_name':forms.TextInput(attrs={'class':'form-control'}),
         'last_name':forms.TextInput(attrs={'class':'form-control'}),
         'email':forms.EmailInput(attrs={'class':'form-control'}),
+        'user_type':forms.Select(attrs={'class':'form-control'}),
         }
 
-
+    
 class LoginForm(AuthenticationForm):
     username = UsernameField(widget=forms.TextInput(attrs={'class':'form-control'}))
     password = forms.CharField(label="Password", widget=forms.PasswordInput(attrs={'class':'form-control'}))

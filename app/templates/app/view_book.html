@@ -38,6 +38,15 @@
     right: 20px;
     font-size: 16.5px;
 }
+
+.aname {
+    position: absolute;
+    bottom: 145px;
+    right: 30px;
+    font-size: 16.5px;
+    font-family: "Sofia", sans-serif;
+}
+
 {% endblock style %}
 
 
@@ -97,20 +106,20 @@
                 <div class="card mt-5">
                     <img class="card-img-top" src="{% static "images/image1.jpeg" %}" alt="Card image cap">
                     <div class="card-body">
-                        <h5 class="card-title text-dark">{{book.bookname}}</h5>
-                        <p class="card-text text-secondary ml-5">"{{book.author}}"</p>
+                        <h3 class="card-title text-dark">{{book.bookname}}</h3>
+                        <p class="aname card-text text-secondary">-- by ' {{book.author}} '</p>
                     </div>
                     <hr>
                     <div class="container">
                         <p class="bottomleft text-dark">Price - <b class="text-danger">{{book.price}}/-</b></p>
-                        <p class="bottomright text-dark">Quantity - <b class="text-danger">{{book.quantity}}</b></p>
+                        <p class="bottomright text-dark">Quantity<b class="text-danger">({{book.quantity}})</b></p>
                     </div>
                     <br>
                     <br>
                     <div class="card-footer">
                         {% if request.user.is_staff %}
                         <a href="{% url 'updatebook' book.id %}" class="btn btn-primary">Update</a>
-                        <a href="{% url 'deletebook' book.id %}" class="rbtn btn btn-primary ml-2">Delete</a>
+                        <a href="{% url 'deletebook' book.id %}" class="rbtn btn btn-danger ml-2">Delete</a>
                         {% else %}
                         <a href="{% url 'purchasebook' book.id %}" class="btn btn-primary">Buy</a>
                         {% endif %}

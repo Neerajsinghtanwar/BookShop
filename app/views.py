@@ -39,7 +39,13 @@ def sign_up(request):
     if request.method == "POST":
         fm = SignUpForm(request.POST)
         if fm.is_valid():
-            fm.save()
+            print("________________",request.POST['user_type'])
+            if request.POST['user_type'] == 'Seller':
+                user = User(username=request.POST['username'], first_name=request.POST['first_name'], last_name=request.POST['last_name'], email=request.POST['email'], password=request.POST['password1'])
+                user.is_staff=True
+                user.save()
+            else:
+                fm.save()
             messages.success(request, "Your account is created")
     else:
         fm = SignUpForm()

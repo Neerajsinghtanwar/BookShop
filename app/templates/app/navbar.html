@@ -26,7 +26,9 @@
         {% endif %}
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="{% url 'userprofile' %}">Profile</a>
+          {% if request.user.user_type == "Customer" %}
           <a class="dropdown-item" href="{% url 'viewpurchasedbooks' %}">Purchased Books</a>
+          {% endif %}
           {% if request.user.is_staff %}
           <a class="dropdown-item" href="{% url 'addbook' %}">Add Book</a>
           {% endif %}
