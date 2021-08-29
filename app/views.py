@@ -1,3 +1,4 @@
+from django.db.models import query
 from django.http.response import HttpResponse
 from django.shortcuts import render, HttpResponseRedirect
 from django.contrib import messages
@@ -92,13 +93,18 @@ def update_book(request, id):
     return render(request, 'app/update_book.html', {'form':form})
 
 
-@login_required
 def view_books(request):
         book = Book.objects.all().order_by('price')
         paginator = Paginator(book, 6)
         page_num = request.GET.get('page')
         books = paginator.get_page(page_num)
         return render(request, 'app/view_book.html', {'books':books})
+
+
+def search_books(request):
+    query = request.GET['query']
+    obj = Book.objects.filter(bookname__icontains=query)
+    return render(request, 'app/view_book.html', {'books':obj})
 
 
 def delete_book(request, id):
